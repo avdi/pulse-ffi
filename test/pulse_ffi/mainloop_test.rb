@@ -22,19 +22,10 @@ module PulseFFI
     end
 
     def test_run_starts_mainloop
-      api = double(pa_mainloop_new: mainloop_ptr = double).as_null_object
+      api = double(pa_mainloop_new: mainloop_ptr = double)
       loop = Mainloop.new(api: api)
       api.should_receive(:pa_mainloop_run).with(mainloop_ptr, nil)
       loop.run
     end
-
-    def test_run_frees_mainloop_after_running
-      api = double(pa_mainloop_new: mainloop_ptr = double)
-      loop = Mainloop.new(api: api)
-      api.should_receive(:pa_mainloop_run).ordered
-      api.should_receive(:pa_mainloop_free).with(mainloop_ptr).ordered
-      loop.run
-    end
-
   end
 end
