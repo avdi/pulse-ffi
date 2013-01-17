@@ -6,5 +6,9 @@ module PulseFFI
       @api     = options.fetch(:api) { Object.new.extend(Bindings) }
       @pointer = @api.pa_mainloop_new
     end
+
+    def run
+      @api.pa_mainloop_run(@pointer, nil)
+    end
   end
 end
