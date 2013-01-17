@@ -10,6 +10,8 @@ module PulseFFI
     end
 
     def teardown
+      RSpec::Mocks.verify
+    ensure
       RSpec::Mocks.teardown
     end
 
