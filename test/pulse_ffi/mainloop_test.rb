@@ -27,5 +27,12 @@ module PulseFFI
       api.should_receive(:pa_mainloop_run).with(mainloop_ptr, nil)
       loop.run
     end
+
+    def test_free_frees_mainloop
+      api = double(pa_mainloop_new: mainloop_ptr = double)
+      loop = Mainloop.new(api: api)
+      api.should_receive(:pa_mainloop_free).with(mainloop_ptr)
+      loop.free
+    end
   end
 end
