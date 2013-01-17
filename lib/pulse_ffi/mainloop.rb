@@ -6,6 +6,7 @@ module PulseFFI
       loop = new(options)
       yield
       loop.run
+    ensure
       loop.free
     end
 

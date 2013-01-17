@@ -26,6 +26,17 @@ module PulseFFI
       end
     end
 
+    def test_class_run_ensures_mainloop_freed
+      Mainloop.stub(new: loop = double.as_null_object)
+      loop.should_receive(:free)
+      begin
+        Mainloop.run do
+          raise Exception, "Oh no!"
+        end
+      rescue Exception
+      end
+    end
+
     def test_initialize_creates_mainloop
       api = double(pa_mainloop_new: :mainloop_ptr)
       loop = Mainloop.new(api: api)
