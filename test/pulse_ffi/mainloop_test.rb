@@ -15,6 +15,17 @@ module PulseFFI
       RSpec::Mocks.teardown
     end
 
+    def test_class_run_creates_yields_runs_and_frees_mainloop
+      probe = double
+      Mainloop.stub(new: loop = double)
+      probe.should_receive(:ping).ordered
+      loop.should_receive(:run).ordered
+      loop.should_receive(:free).ordered
+      Mainloop.run do
+        probe.ping
+      end
+    end
+
     def test_initialize_creates_mainloop
       api = double(pa_mainloop_new: :mainloop_ptr)
       loop = Mainloop.new(api: api)
