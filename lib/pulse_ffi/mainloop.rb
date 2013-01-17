@@ -4,7 +4,7 @@ module PulseFFI
 
     def self.run(options = {})
       loop = new(options)
-      yield
+      yield(loop)
       loop.run
     ensure
       loop.free
